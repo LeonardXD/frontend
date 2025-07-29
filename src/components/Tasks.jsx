@@ -87,10 +87,22 @@ const EquationMode = ({ updateCoins, setEqSolved, triggerAlert }) => {
   const [answer, setAnswer] = useState('');
 
   const generateEquation = () => {
-    setNum1(Math.floor(Math.random() * 100));
-    setNum2(Math.floor(Math.random() * 100));
     const operators = ['+', '-', '*'];
-    setOperator(operators[Math.floor(Math.random() * operators.length)]);
+    const newOperator = operators[Math.floor(Math.random() * operators.length)];
+
+    let newNum1, newNum2;
+
+    if (newOperator === '*') {
+      newNum1 = Math.floor(Math.random() * 127) + 1;
+      newNum2 = Math.floor(Math.random() * 4) + 1;
+    } else {
+      newNum1 = Math.floor(Math.random() * 127) + 1;
+      newNum2 = Math.floor(Math.random() * 64) + 1;
+    }
+
+    setNum1(newNum1);
+    setNum2(newNum2);
+    setOperator(newOperator);
   };
 
   useEffect(() => {
@@ -162,21 +174,112 @@ const CaptchaMode = ({ updateCoins, setCapSolved, triggerAlert }) => {
 };
 
 const DailyRewardMode = ({ updateCoins, triggerAlert }) => {
-  const [claimed, setClaimed] = useState(false);
+  const [canClaim, setCanClaim] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState('');
+
+  const getPHTDate = (date) => {
+    const offset = 8 * 60; // UTC+8
+    const localDate = new Date(date.getTime() + offset * 60 * 1000);
+    return localDate;
+  };
+
+  useEffect(() => {
+    const checkClaimStatus = () => {
+      const lastClaimedTimestamp = localStorage.getItem('lastClaimedTimestamp');
+      if (lastClaimedTimestamp) {
+        const lastClaimDate = new Date(parseInt(lastClaimedTimestamp, 10));
+        const now = new Date();
+
+        const lastClaimDatePHT = new Date(lastClaimDate.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+        const nowDatePHT = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+
+        if (lastClaimDatePHT.getFullYear() < nowDatePHT.getFullYear() ||
+            lastClaimDatePHT.getMonth() < nowDatePHT.getMonth() ||
+            lastClaimDatePHT.getDate() < nowDatePHT.getDate()) {
+          setCanClaim(true);
+        } else {
+          setCanClaim(false);
+          startCountdown();
+        }
+      } else {
+        setCanClaim(true);
+      }
+    };
+
+    const startCountdown = () => {
+      const interval = setInterval(() => {
+        const now = new Date();
+        const nowDatePHT = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+        
+        const tomorrowPHT = new Date(nowDatePHT);
+        tomorrowPHT.setDate(nowDatePHT.getDate() + 1);
+        tomorrowPHT.setHours(0, 0, 0, 0);
+
+        const diff = tomorrowPHT.getTime() - nowDatePHT.getTime();
+
+        if (diff <= 0) {
+          setCanClaim(true);
+          setTimeRemaining('');
+          clearInterval(interval);
+          return;
+        }
+
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / 1000 / 60) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        setTimeRemaining(`${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`);
+      }, 1000);
+
+      return () => clearInterval(interval);
+    };
+
+    checkClaimStatus();
+  }, []);
 
   const handleClaim = () => {
-    const reward = Math.floor(Math.random() * 951) + 50;
-    updateCoins(reward);
-    setClaimed(true);
-    triggerAlert(`You claimed ${reward} coins!`, 'success');
+    if (canClaim) {
+      const reward = Math.floor(Math.random() * 951) + 50;
+      updateCoins(reward);
+      triggerAlert(`You claimed ${reward} coins!`, 'success');
+      localStorage.setItem('lastClaimedTimestamp', Date.now().toString());
+      setCanClaim(false);
+      // Immediately start the countdown after claiming
+      const interval = setInterval(() => {
+        const now = new Date();
+        const nowDatePHT = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+        
+        const tomorrowPHT = new Date(nowDatePHT);
+        tomorrowPHT.setDate(nowDatePHT.getDate() + 1);
+        tomorrowPHT.setHours(0, 0, 0, 0);
+
+        const diff = tomorrowPHT.getTime() - nowDatePHT.getTime();
+
+        if (diff <= 0) {
+          setCanClaim(true);
+          setTimeRemaining('');
+          clearInterval(interval);
+          return;
+        }
+
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / 1000 / 60) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        setTimeRemaining(`${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`);
+      }, 1000);
+    }
   };
 
   return (
     <div className="text-center">
       <p className="text-lg mb-4">Reward Range: 50 - 1000 coins</p>
-      <button onClick={handleClaim} disabled={claimed} className="bg-green-500 text-white font-bold py-2 px-4 rounded-full disabled:bg-gray-400">
-        {claimed ? 'Claimed' : 'Claim'}
+      <button onClick={handleClaim} disabled={!canClaim} className="bg-green-500 text-white font-bold py-2 px-4 rounded-full disabled:bg-gray-400 disabled:cursor-not-allowed">
+        {canClaim ? 'Claim' : 'Claimed'}
       </button>
+      {!canClaim && timeRemaining && (
+        <div className="mt-4 text-lg">
+          <p>Next reward in: <span className="font-bold">{timeRemaining}</span></p>
+        </div>
+      )}
     </div>
   );
 };
