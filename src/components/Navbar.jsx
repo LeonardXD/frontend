@@ -13,22 +13,26 @@ const Navbar = ({ toggleSidebar }) => {
   const authPaths = ['/signin', '/signup', '/'];
   const isAuthPage = authPaths.includes(location.pathname);
 
+  const contentPagePaths = ['/dashboard', '/tasks', '/about', '/faq', '/contact'];
+  const isContentPage = contentPagePaths.includes(location.pathname);
+
   return (
     <nav className="bg-white shadow-md p-4 flex items-center justify-between relative">
       {/* Left Side: Logo, Brand, and Mobile Sidebar Toggle */}
       <div className="flex items-center space-x-4">
-        {!isAuthPage && (
-          <button
-            onClick={toggleSidebar}
-            className="md:hidden text-gray-800 focus:outline-none"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        {/* Conditional rendering for the left side of the navbar */}
+        {isContentPage ? (
+          // On content pages: show logo as sidebar toggle on mobile, hide on desktop
+          <button onClick={toggleSidebar} className="lg:hidden text-gray-800 focus:outline-none">
+            <img src={logo} alt="Logo" className="h-10 w-10" />
           </button>
+        ) : (
+          // On landing/auth pages: show logo and brand name
+          <Link to="/" className="flex items-center space-x-3">
+            <img src={logo} alt="Logo" className="h-10 w-10" />
+            <span className="text-xl font-bold text-gray-800">DemoTasker</span>
+          </Link>
         )}
-        <Link to={isAuthPage ? '/' : '/dashboard'} className="flex items-center space-x-3">
-          <img src={logo} alt="Logo" className="h-10 w-10" />
-          <span className="text-xl font-bold text-gray-800">DemoTasker</span>
-        </Link>
       </div>
 
       {/* Right Side: Conditional Buttons or Profile Icon */}
@@ -68,7 +72,7 @@ const Navbar = ({ toggleSidebar }) => {
                   Profile
                 </Link>
                 <a
-                  href="#"
+                  href="/"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
                   Logout

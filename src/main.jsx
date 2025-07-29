@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation, Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import Tasks from './components/Tasks';
@@ -13,9 +13,10 @@ import Footer from './components/Footer';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import LandingPage from './components/LandingPage';
+import NotFoundPage from './components/NotFoundPage';
 import './index.css';
 
-function App() {
+const AppLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
 
@@ -33,21 +34,38 @@ function App() {
       <div className="flex-1 flex flex-col">
         <Navbar toggleSidebar={toggleSidebar} />
         <main className="flex-grow w-full px-4 md:px-6 lg:px-8 py-4 md:py-6 lg:py-8">
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/tasks" element={<Tasks />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-          </Routes>
+          <Outlet />
         </main>
         <Footer />
       </div>
     </div>
+  );
+};
+
+function App() {
+  return (
+    <Routes>
+      <Route element={<AppLayout />}>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/tasks" element={<Tasks />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Route>
+      <Route
+        path="*"
+        element={
+          <>
+            <NotFoundPage />
+            <Footer />
+          </>
+        }
+      />
+    </Routes>
   );
 }
 
