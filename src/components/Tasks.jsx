@@ -72,7 +72,7 @@ const Tasks = () => {
           {mode === 'captcha' && <CaptchaMode updateCoins={updateCoins} setCapSolved={setCapSolved} triggerAlert={triggerAlert} />}
           {mode === 'dailyReward' && <DailyRewardMode updateCoins={updateCoins} triggerAlert={triggerAlert} />}
           {mode === 'numberEncoding' && <NumberEncodingMode updateCoins={updateCoins} triggerAlert={triggerAlert} />}
-          {mode === 'memory' && <MemoryMode updateCoins={updateCoins} setMemoryGameCompleted={setMemoryGameCompleted} />}
+          {mode === 'memory' && <MemoryMode updateCoins={updateCoins} setMemoryGameCompleted={setMemoryGameCompleted} triggerAlert={triggerAlert} />}
         </div>
       </div>
     </div>
@@ -350,8 +350,103 @@ const NumberEncodingMode = ({ updateCoins, triggerAlert }) => {
   );
 };
 
-const MemoryMode = ({ updateCoins, setMemoryGameCompleted }) => {
-  return <div className="text-center"><p>Memory Game Mode - Coming Soon!</p></div>;
+const MemoryMode = ({ updateCoins, setMemoryGameCompleted, triggerAlert }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleGameEnd = (isWin) => {
+    if (isWin) {
+      updateCoins(30);
+      setMemoryGameCompleted(prev => prev + 1);
+      triggerAlert('You won! 30 coins awarded.', 'success');
+    } else {
+      triggerAlert('Time is up! Try again.', 'error');
+    }
+    setIsModalOpen(false);
+  };
+
+  return (
+    <div className="text-center">
+      <button onClick={() => setIsModalOpen(true)} className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full">
+        Play Memory Game
+      </button>
+      {isModalOpen && <MemoryGameModal onClose={() => setIsModalOpen(false)} onGameEnd={handleGameEnd} />}
+    </div>
+  );
+};
+
+const MemoryGameModal = ({ onClose, onGameEnd }) => {
+  const [cards, setCards] = useState([]);
+  const [flipped, setFlipped] = useState([]);
+  const [matched, setMatched] = useState([]);
+  const [timer, setTimer] = useState(70);
+
+  useEffect(() => {
+    const numbers = Array.from({ length: 10 }, (_, i) => i + 1);
+    const gameCards = [...numbers, ...numbers]
+      .sort(() => Math.random() - 0.5)
+      .map((number, index) => ({ id: index, number }));
+    setCards(gameCards);
+  }, []);
+
+  useEffect(() => {
+    if (timer > 0 && matched.length < 20) {
+      const interval = setInterval(() => {
+        setTimer(t => t - 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    } else if (timer === 0) {
+      onGameEnd(false);
+    }
+  }, [timer, matched]);
+
+  useEffect(() => {
+    if (flipped.length === 2) {
+      const [first, second] = flipped;
+      if (cards[first].number === cards[second].number) {
+        setMatched(prev => [...prev, first, second]);
+      }
+      setTimeout(() => setFlipped([]), 500);
+    }
+  }, [flipped, cards]);
+
+  useEffect(() => {
+    if (matched.length === 20) {
+      onGameEnd(true);
+    }
+  }, [matched]);
+
+  const handleCardClick = (index) => {
+    if (flipped.length < 2 && !flipped.includes(index) && !matched.includes(index)) {
+      setFlipped(prev => [...prev, index]);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-2xl">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-bold">Memory Game</h2>
+          <div className="text-2xl font-bold text-red-500">{timer}s</div>
+        </div>
+        <div className="grid grid-cols-4 gap-4">
+          {cards.map((card, index) => (
+            <div
+              key={index}
+              className={`w-24 h-24 rounded-lg cursor-pointer flex items-center justify-center text-3xl font-bold transition-transform duration-500 ${
+                flipped.includes(index) || matched.includes(index) ? 'bg-blue-400 text-white transform rotate-y-180' : 'bg-gray-300'
+              }`}
+              onClick={() => handleCardClick(index)}
+            >
+              {flipped.includes(index) || matched.includes(index) ? card.number : '?'}
+            </div>
+          ))}
+        </div>
+        <button onClick={onClose} className="mt-6 bg-red-500 text-white font-bold py-2 px-4 rounded-full">
+          Close
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default Tasks;
