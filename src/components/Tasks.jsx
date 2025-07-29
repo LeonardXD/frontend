@@ -71,7 +71,7 @@ const Tasks = () => {
           {mode === 'equation' && <EquationMode updateCoins={updateCoins} setEqSolved={setEqSolved} triggerAlert={triggerAlert} />}
           {mode === 'captcha' && <CaptchaMode updateCoins={updateCoins} setCapSolved={setCapSolved} triggerAlert={triggerAlert} />}
           {mode === 'dailyReward' && <DailyRewardMode updateCoins={updateCoins} triggerAlert={triggerAlert} />}
-          {mode === 'numberEncoding' && <NumberEncodingMode updateCoins={updateCoins} />}
+          {mode === 'numberEncoding' && <NumberEncodingMode updateCoins={updateCoins} triggerAlert={triggerAlert} />}
           {mode === 'memory' && <MemoryMode updateCoins={updateCoins} setMemoryGameCompleted={setMemoryGameCompleted} />}
         </div>
       </div>
@@ -284,8 +284,70 @@ const DailyRewardMode = ({ updateCoins, triggerAlert }) => {
   );
 };
 
-const NumberEncodingMode = ({ updateCoins }) => {
-  return <div className="text-center"><p>Number Encoding Mode - Coming Soon!</p></div>;
+const NumberEncodingMode = ({ updateCoins, triggerAlert }) => {
+  const [option, setOption] = useState(null);
+  const [numbers, setNumbers] = useState([]);
+  const [userInput, setUserInput] = useState('');
+
+  const options = [
+    { count: 3, coins: 1 },
+    { count: 5, coins: 3 },
+    { count: 10, coins: 5 },
+  ];
+
+  const handleOptionSelect = (selectedOption) => {
+    setOption(selectedOption);
+    const newNumbers = Array.from({ length: selectedOption.count }, () => Math.floor(Math.random() * 10));
+    setNumbers(newNumbers);
+    setUserInput('');
+  };
+
+  const handleSubmit = () => {
+    const correctAnwer = numbers.join('');
+    if (userInput === correctAnwer) {
+      updateCoins(option.coins);
+      triggerAlert(`Correct! You earned ${option.coins} coins.`, 'success');
+    } else {
+      triggerAlert('Incorrect. Try again.', 'error');
+    }
+    
+    const newNumbers = Array.from({ length: option.count }, () => Math.floor(Math.random() * 10));
+    setNumbers(newNumbers);
+    setUserInput('');
+  };
+
+  if (!option) {
+    return (
+      <div className="flex flex-col items-center">
+        <h2 className="text-2xl font-bold mb-4">Choose an option:</h2>
+        {options.map((opt) => (
+          <button
+            key={opt.count}
+            onClick={() => handleOptionSelect(opt)}
+            className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full mb-2 w-64"
+          >
+            {opt.count} numbers for {opt.coins} coin{opt.coins > 1 ? 's' : ''}
+          </button>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col items-center">
+      <h2 className="text-3xl font-bold mb-4 tracking-widest select-none">{numbers.join(' ')}</h2>
+      <input
+        type="text"
+        value={userInput}
+        onChange={(e) => setUserInput(e.target.value)}
+        className="border-2 border-gray-300 p-2 rounded-md w-1/2 mb-4"
+        placeholder="Enter the numbers"
+      />
+      <button onClick={handleSubmit} className="bg-green-500 text-white font-bold py-2 px-4 rounded-full">
+        Submit
+      </button>
+    </div>
+  );
 };
 
 const MemoryMode = ({ updateCoins, setMemoryGameCompleted }) => {
