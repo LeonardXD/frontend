@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTitle } from '../hooks/useTitle';
 
 const faqs = [
   {
@@ -57,6 +58,7 @@ const FAQItem = ({ faq, index, open, setOpen }) => {
 };
 
 const FAQ = () => {
+  useTitle('FAQ | DemoTasker');
   const [open, setOpen] = useState(null);
 
   return (

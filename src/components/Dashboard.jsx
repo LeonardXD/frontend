@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useTitle } from '../hooks/useTitle';
 
 const Dashboard = () => {
+  useTitle('Dashboard | DemoTasker');
   const [coins, setCoins] = useState(0);
 
   useEffect(() => {

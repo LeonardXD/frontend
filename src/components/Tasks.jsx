@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Alert from './Alert';
+import { useTitle } from '../hooks/useTitle';
 
 const Tasks = () => {
+  useTitle('Tasks | DemoTasker');
   const [mode, setMode] = useState('equation');
   const [coins, setCoins] = useState(0);
   const [tasksCompleted, setTasksCompleted] = useState(0);

@@ -1,7 +1,6 @@
-
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTitle } from '../hooks/useTitle';
 
 // --- Constants for Text Content ---
 const navLinks = [
@@ -80,6 +79,7 @@ const Icon = ({ path, className = 'w-12 h-12' }) => (
 
 // --- Main Landing Page Component ---
 const LandingPage = () => {
+  useTitle('DemoTasker | Earn Seamlessly');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (

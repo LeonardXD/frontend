@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FaWallet, FaLock, FaPen } from 'react-icons/fa'; // Assuming react-icons is installed
+import { useTitle } from '../hooks/useTitle';
 
 const ProfilePage = () => {
+  useTitle('Profile | DemoTasker');
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 

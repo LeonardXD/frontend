@@ -1,7 +1,8 @@
-
 import React, { useState } from 'react';
+import { useTitle } from '../hooks/useTitle';
 
 const SignUp = () => {
+  useTitle('Sign Up');
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
