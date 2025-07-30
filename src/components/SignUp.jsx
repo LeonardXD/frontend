@@ -40,6 +40,16 @@ const SignUp = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <div className="w-full max-w-lg p-8 space-y-6 bg-white rounded-xl shadow-lg">
+        <div className="mb-6 p-4 bg-slate-100 rounded-xl shadow-md flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
+          <img
+            src="/robot-wave.png"
+            alt="Waving Robot"
+            className="w-24 h-24"
+          />
+          <p className="text-xl font-semibold text-gray-700 text-center md:text-left">
+            Be one of DemoTasker Community!
+          </p>
+      </div>
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-900">Create an Account</h1>
           <p className="mt-2 text-sm text-gray-600">

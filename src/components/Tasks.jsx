@@ -324,7 +324,7 @@ const NumberEncodingMode = ({ updateCoins, triggerAlert }) => {
           <button
             key={opt.count}
             onClick={() => handleOptionSelect(opt)}
-            className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full mb-2 w-64"
+            className="bg-green-500 text-white font-bold py-2 px-4 rounded-full mb-2 w-64"
           >
             {opt.count} numbers for {opt.coins} coin{opt.coins > 1 ? 's' : ''}
           </button>
@@ -366,7 +366,7 @@ const MemoryMode = ({ updateCoins, setMemoryGameCompleted, triggerAlert }) => {
 
   return (
     <div className="text-center">
-      <button onClick={() => setIsModalOpen(true)} className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full">
+      <button onClick={() => setIsModalOpen(true)} className="bg-green-500 text-white font-bold py-2 px-4 rounded-full">
         Play Memory Game
       </button>
       {isModalOpen && <MemoryGameModal onClose={() => setIsModalOpen(false)} onGameEnd={handleGameEnd} />}
