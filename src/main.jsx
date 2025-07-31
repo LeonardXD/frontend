@@ -15,6 +15,7 @@ import SignUp from './components/SignUp';
 import LandingPage from './components/LandingPage';
 import NotFoundPage from './components/NotFoundPage';
 import Leaderboard from './components/Leaderboard';
+import AdminDashboard from './components/AdminDashboard';
 import './index.css';
 
 const AppLayout = () => {
@@ -58,6 +59,9 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
       </Route>
+      <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Route path="/admin/withdrawals" element={<AdminDashboard />} />
+      <Route path="/admin/promos" element={<AdminDashboard />} />
       <Route
         path="*"
         element={

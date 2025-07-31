@@ -7,6 +7,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const menuItems = [
     { name: 'Dashboard', path: '/dashboard' },
     { name: 'Tasks', path: '/tasks' },
+    { name: 'Leaderboard', path: '/leaderboard' },
     { name: 'About', path: '/about' },
     { name: 'FAQ', path: '/faq' },
     { name: 'Contact', path: '/contact' },
