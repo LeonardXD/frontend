@@ -16,7 +16,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     <div
       className={`fixed inset-y-0 left-0 w-64 bg-white text-gray-800 p-4 border-r border-gray-300 transform ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
-      } md:translate-x-0 transition-transform duration-300 ease-in-out z-40 md:static md:block`}
+      } md:translate-x-0 transition-transform duration-300 ease-in-out z-40 md:relative md:block`}
     >
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">

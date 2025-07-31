@@ -14,6 +14,7 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import LandingPage from './components/LandingPage';
 import NotFoundPage from './components/NotFoundPage';
+import Leaderboard from './components/Leaderboard';
 import './index.css';
 
 const AppLayout = () => {
@@ -55,6 +56,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
       </Route>
       <Route
         path="*"

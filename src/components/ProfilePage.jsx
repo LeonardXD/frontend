@@ -36,7 +36,7 @@ const ProfilePage = () => {
         {/* Profile Section */}
         <div className="text-center mb-8">
           <img
-            src="https://via.placeholder.com/150" // Placeholder image
+            src="/logo.png" // Placeholder image
             alt="Profile"
             className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
           />
@@ -51,7 +51,7 @@ const ProfilePage = () => {
             {/* Wallet Option */}
             <div className="flex items-center justify-between bg-gray-50 p-4 rounded-lg cursor-pointer hover:bg-gray-100 transition duration-200 ease-in-out">
               <div className="flex items-center">
-                <FaWallet className="text-blue-500 mr-3 text-xl" />
+                <FaWallet className="text-green-500 mr-3 text-xl" />
                 <span className="text-lg text-gray-700">Wallet</span>
               </div>
               <FaPen className="text-gray-500 cursor-pointer hover:text-gray-700" onClick={openWalletModal} />
@@ -59,7 +59,7 @@ const ProfilePage = () => {
 
             {/* Change Password Option */}
             <div className="flex items-center bg-gray-50 p-4 rounded-lg cursor-pointer hover:bg-gray-100 transition duration-200 ease-in-out" onClick={openPasswordModal}>
-              <FaLock className="text-purple-500 mr-3 text-xl" />
+              <FaLock className="text-green-500 mr-3 text-xl" />
               <span className="text-lg text-gray-700">Change Password</span>
             </div>
           </div>
@@ -99,14 +99,14 @@ const ProfilePage = () => {
                 type="text"
                 id="account-number"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder="Enter account number"
+                placeholder="09xxxxxxxxx"
               />
             </div>
 
             <div className="flex justify-end">
               <button
                 onClick={closeWalletModal}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 Save
               </button>
@@ -166,7 +166,7 @@ const ProfilePage = () => {
             <div className="flex justify-end">
               <button
                 onClick={closePasswordModal}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 Confirm
               </button>

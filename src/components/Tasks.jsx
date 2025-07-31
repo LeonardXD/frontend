@@ -42,7 +42,7 @@ const Tasks = () => {
   return (
     <div className="w-full px-4 md:px-6 lg:px-8 py-4 md:py-6 lg:py-8">
       {showAlert && <Alert message={alertMessage} type={alertType} onClose={handleCloseAlert} />}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="md:col-span-1 space-y-8">
           <div className="bg-green-500 text-white p-6 rounded-lg shadow-lg">
             <h2 className="text-2xl font-bold">Your Coins</h2>
@@ -422,7 +422,7 @@ const MemoryGameModal = ({ onClose, onGameEnd }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-2xl">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">Memory Game</h2>
@@ -432,7 +432,7 @@ const MemoryGameModal = ({ onClose, onGameEnd }) => {
           {cards.map((card, index) => (
             <div
               key={index}
-              className={`w-24 h-24 rounded-lg cursor-pointer flex items-center justify-center text-3xl font-bold transition-transform duration-500 ${
+              className={`w-full h-24 rounded-lg cursor-pointer flex items-center justify-center text-3xl font-bold transition-transform duration-500 ${
                 flipped.includes(index) || matched.includes(index) ? 'bg-blue-400 text-white transform rotate-y-180' : 'bg-gray-300'
               }`}
               onClick={() => handleCardClick(index)}

@@ -13,7 +13,7 @@ const Navbar = ({ toggleSidebar }) => {
   const authPaths = ['/signin', '/signup', '/'];
   const isAuthPage = authPaths.includes(location.pathname);
 
-  const contentPagePaths = ['/dashboard', '/tasks', '/about', '/faq', '/contact'];
+  const contentPagePaths = ['/dashboard', '/tasks', '/leaderboard', '/about', '/faq', '/contact', '/profile'];
   const isContentPage = contentPagePaths.includes(location.pathname);
 
   return (
@@ -23,7 +23,7 @@ const Navbar = ({ toggleSidebar }) => {
         {/* Conditional rendering for the left side of the navbar */}
         {isContentPage ? (
           // On content pages: show logo as sidebar toggle on mobile, hide on desktop
-          <button onClick={toggleSidebar} className="lg:hidden text-gray-800 focus:outline-none">
+          <button onClick={toggleSidebar} className="md:hidden text-gray-800 focus:outline-none">
             <img src={logo} alt="Logo" className="h-10 w-10" />
           </button>
         ) : (
