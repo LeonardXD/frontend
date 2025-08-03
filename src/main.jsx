@@ -17,12 +17,12 @@ import NotFoundPage from './components/NotFoundPage';
 import Leaderboard from './components/Leaderboard';
 import AdminDashboard from './components/AdminDashboard';
 import AdminSignIn from './components/AdminSignIn';
+import Forum from './components/Forum';
 import './index.css';
 
 const AppLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
-
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -59,6 +59,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/forum" element={<Forum />} />
       </Route>
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
       <Route path="/admin/generate-code" element={<AdminDashboard />} />

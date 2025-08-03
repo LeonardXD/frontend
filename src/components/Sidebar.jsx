@@ -11,6 +11,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     { name: 'About', path: '/about' },
     { name: 'FAQ', path: '/faq' },
     { name: 'Contact', path: '/contact' },
+    { name: 'Forum', path: '/forum' },
   ];
 
   return (

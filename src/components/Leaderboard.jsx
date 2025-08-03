@@ -21,7 +21,7 @@ const Leaderboard = () => {
       <h1 className="text-2xl font-bold mb-4 text-center">Leaderboard</h1>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white shadow-md rounded-lg text-center">
-          <thead className="bg-gray-800 text-white">
+          <thead className="bg-green-800 text-white">
             <tr>
               <th className="py-3 px-4">Rank</th>
               <th className="py-3 px-4">Name</th>
@@ -47,7 +47,7 @@ const Leaderboard = () => {
         <div className="text-center mt-4">
           <button
             onClick={showMore}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
           >
             Show More
           </button>
