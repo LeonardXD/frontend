@@ -16,6 +16,7 @@ import LandingPage from './components/LandingPage';
 import NotFoundPage from './components/NotFoundPage';
 import Leaderboard from './components/Leaderboard';
 import AdminDashboard from './components/AdminDashboard';
+import AdminSignIn from './components/AdminSignIn';
 import './index.css';
 
 const AppLayout = () => {
@@ -27,7 +28,7 @@ const AppLayout = () => {
   };
 
   // Paths where the sidebar should be hidden
-  const sidebarHiddenPaths = ['/', '/signin', '/signup'];
+  const sidebarHiddenPaths = ['/', '/signin', '/signup', '/admin/signin'];
   const shouldShowSidebar = !sidebarHiddenPaths.includes(location.pathname);
 
   return (
@@ -63,6 +64,7 @@ function App() {
       <Route path="/admin/generate-code" element={<AdminDashboard />} />
       <Route path="/admin/withdrawals" element={<AdminDashboard />} />
       <Route path="/admin/promos" element={<AdminDashboard />} />
+      <Route path="/admin/signin" element={<AdminSignIn />} />
       <Route
         path="*"
         element={
