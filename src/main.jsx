@@ -18,6 +18,7 @@ import Leaderboard from './components/Leaderboard';
 import AdminDashboard from './components/AdminDashboard';
 import AdminSignIn from './components/AdminSignIn';
 import Forum from './components/Forum';
+import WithdrawalHistory from './components/WithdrawalHistory';
 import './index.css';
 
 const AppLayout = () => {
@@ -60,6 +61,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/forum" element={<Forum />} />
+        <Route path="/history" element={<WithdrawalHistory />} />
       </Route>
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
       <Route path="/admin/generate-code" element={<AdminDashboard />} />

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FaMoneyCheck } from "react-icons/fa";
 import { useTitle } from '../hooks/useTitle';
 
 // --- Constants for Text Content ---
@@ -41,9 +42,9 @@ const features = [
     description: 'From solving equations to memory game, find tasks that fit your interests.',
   },
   {
-    icon: 'M13 10V3L4 14h7v7l9-11h-7z',
-    title: 'Fast Payouts',
-    description: 'Receive your earnings quickly and securely through our trusted payment methods.',
+    iconComponent: <FaMoneyCheck className="w-12 h-12" />,
+    title: 'Legitimate Payouts',
+    description: 'Receive your earnings securely and legitimately through our trusted payment methods.',
   },
   {
     icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M15 21v-1a6 6 0 00-5.197-5.986',
@@ -90,7 +91,7 @@ const LandingPage = () => {
           <Container>
             <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900">{heroContent.heading}</h1>
             <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600">{heroContent.description}</p>
-            <Link to="/signup" className="mt-8 inline-block px-8 py-3 text-lg font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+            <Link to="/signup" className="mt-8 inline-block px-8 py-3 text-lg font-medium text-white bg-green-600 rounded-lg hover:bg-green-700">
               {heroContent.cta}
             </Link>
           </Container>
@@ -103,7 +104,7 @@ const LandingPage = () => {
             <div className="mt-12 grid gap-8 md:grid-cols-3">
               {howItWorksSteps.map((step) => (
                 <div key={step.title} className="flex flex-col items-center">
-                  <div className="flex items-center justify-center h-16 w-16 bg-blue-100 text-blue-600 rounded-full">
+                  <div className="flex items-center justify-center h-16 w-16 bg-blue-100 text-green-600 rounded-full">
                     <Icon path={step.icon} />
                   </div>
                   <h3 className="mt-5 text-xl font-semibold">{step.title}</h3>
@@ -121,8 +122,8 @@ const LandingPage = () => {
             <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
               {features.map((feature) => (
                 <div key={feature.title} className="p-6 bg-white rounded-lg shadow-md">
-                  <div className="text-blue-600">
-                    <Icon path={feature.icon} />
+                  <div className="text-green-600">
+                    {feature.iconComponent ? feature.iconComponent : <Icon path={feature.icon} />}
                   </div>
                   <h3 className="mt-4 text-xl font-semibold">{feature.title}</h3>
                   <p className="mt-2 text-gray-600">{feature.description}</p>
@@ -133,10 +134,10 @@ const LandingPage = () => {
         </Section>
 
         {/* Call-to-Action Section */}
-        <Section id="faq" className="bg-blue-600 text-white">
+        <Section id="faq" className="bg-green-600 text-white">
           <Container className="text-center">
             <h2 className="text-3xl font-bold">{ctaContent.heading}</h2>
-            <Link to="/signup" className="mt-6 inline-block px-8 py-3 text-lg font-medium text-blue-600 bg-white rounded-lg hover:bg-gray-100">
+            <Link to="/signup" className="mt-6 inline-block px-8 py-3 text-lg font-medium text-green-600 bg-white rounded-lg hover:bg-gray-100">
               {ctaContent.cta}
             </Link>
           </Container>

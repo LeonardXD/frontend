@@ -192,7 +192,7 @@ const SignUp = () => {
 
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300"
+            className="w-full px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300"
           >
             Sign Up
           </button>
@@ -200,7 +200,7 @@ const SignUp = () => {
 
         <p className="text-sm text-center text-gray-500">
           Already have an account?{' '}
-          <a href="/signin" className="font-medium text-blue-600 hover:underline">
+          <a href="/signin" className="font-medium text-green-600 hover:underline">
             Sign In
           </a>
         </p>

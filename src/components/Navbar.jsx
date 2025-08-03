@@ -48,7 +48,7 @@ const Navbar = ({ toggleSidebar }) => {
             </Link>
             <Link
               to="/signup"
-              className="py-2 px-3 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+              className="py-2 px-3 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700"
             >
               Sign Up
             </Link>
