@@ -60,6 +60,7 @@ function App() {
         <Route path="/leaderboard" element={<Leaderboard />} />
       </Route>
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Route path="/admin/generate-code" element={<AdminDashboard />} />
       <Route path="/admin/withdrawals" element={<AdminDashboard />} />
       <Route path="/admin/promos" element={<AdminDashboard />} />
       <Route

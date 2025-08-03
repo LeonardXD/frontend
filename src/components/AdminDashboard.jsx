@@ -13,6 +13,7 @@ const CardIcon = ({ children }) => (
 const AdminSidebar = ({ isOpen, toggleSidebar, activeTab, setActiveTab }) => {
   const menuItems = [
     { name: 'Dashboard', path: '/admin/dashboard' },
+    { name: 'Generate Code', path: '/admin/generate-code' },
     { name: 'Withdrawals', path: '/admin/withdrawals' },
     { name: 'Promos', path: '/admin/promos' },
   ];
@@ -169,6 +170,39 @@ const WithdrawalsView = ({ withdrawals, handleMarkAsPaid }) => (
   </>
 );
 
+// View for generating codes
+const GenerateCodeView = () => {
+  const [generatedCode, setGeneratedCode] = useState(null);
+
+  const generateCode = () => {
+    const characters = 'A0B1C2D3E4F5G6H7I8J9KLMNOPQRSTUVWXYZ';
+    let result = '';
+    for (let i = 0; i < 6; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    setGeneratedCode(result);
+  };
+
+  return (
+    <>
+      <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Generate Code</h1>
+      <div className="bg-white p-6 rounded-lg shadow-md text-center">
+        <button
+          onClick={generateCode}
+          className="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition-colors"
+        >
+          Generate
+        </button>
+        {generatedCode && (
+          <p className="mt-4 text-green-600">
+            Code has been successfully generated: <strong className="font-bold">{generatedCode}</strong>
+          </p>
+        )}
+      </div>
+    </>
+  );
+};
+
 // Main AdminDashboard component
 const AdminDashboard = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -192,6 +226,8 @@ const AdminDashboard = () => {
     switch (activeTab) {
       case 'Dashboard':
         return <MainDashboardView />;
+      case 'Generate Code':
+        return <GenerateCodeView />;
       case 'Withdrawals':
         return <WithdrawalsView withdrawals={withdrawals} handleMarkAsPaid={handleMarkAsPaid} />;
       case 'Promos':
