@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import logo from '../../public/logo.png';
 import profile from '../../public/profile.png';
 
+import AdminProfilePage from './AdminProfilePage';
+
 // Re-usable Icon component for cards
 const CardIcon = ({ children }) => (
   <div className="p-3 bg-gray-200 rounded-full">{children}</div>
@@ -65,7 +67,7 @@ const AdminSidebar = ({ isOpen, toggleSidebar, activeTab, setActiveTab }) => {
 };
 
 // Navbar component for the Admin Dashboard
-const AdminNavbar = ({ toggleSidebar }) => {
+const AdminNavbar = ({ toggleSidebar, setActiveTab }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
@@ -87,8 +89,17 @@ const AdminNavbar = ({ toggleSidebar }) => {
         />
         {isDropdownOpen && (
           <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+            <a
+              href="#"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveTab('Profile');
+                setIsDropdownOpen(false);
+              }}
+            >
+              Profile
+            </a>
             <a href="/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
           </div>
         )}
@@ -99,7 +110,7 @@ const AdminNavbar = ({ toggleSidebar }) => {
 
 // Footer component for the Admin Dashboard
 const AdminFooter = () => (
-  <footer className="bg-white text-gray-600 text-center p-4 mt-auto border-t">
+  <footer className="bg-neutral-900 text-white text-center p-4 mt-auto border-t">
     <p>© 2025 Admin Dashboard. All rights reserved.</p>
   </footer>
 );
@@ -232,6 +243,8 @@ const AdminDashboard = () => {
         return <WithdrawalsView withdrawals={withdrawals} handleMarkAsPaid={handleMarkAsPaid} />;
       case 'Promos':
         return <h1 className="text-3xl font-bold text-gray-800">Promos</h1>;
+      case 'Profile':
+        return <AdminProfilePage />;
       default:
         return <MainDashboardView />;
     }
@@ -241,7 +254,7 @@ const AdminDashboard = () => {
     <div className="flex h-screen bg-gray-100">
       <AdminSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} activeTab={activeTab} setActiveTab={setActiveTab} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <AdminNavbar toggleSidebar={toggleSidebar} />
+        <AdminNavbar toggleSidebar={toggleSidebar} setActiveTab={setActiveTab} />
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4 md:p-8">
           {renderContent()}
         </main>
