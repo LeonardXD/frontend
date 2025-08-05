@@ -13,7 +13,7 @@ const Navbar = ({ toggleSidebar }) => {
   const authPaths = ['/signin', '/signup', '/'];
   const isAuthPage = authPaths.includes(location.pathname);
 
-  const contentPagePaths = ['/dashboard', '/tasks', '/leaderboard', '/about', '/faq', '/contact', '/profile', '/forum'];
+  const contentPagePaths = ['/dashboard', '/tasks', '/leaderboard', '/about', '/faq', '/contact', '/profile', '/forum', '/referral'];
   const isContentPage = contentPagePaths.includes(location.pathname);
 
   return (

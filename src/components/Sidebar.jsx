@@ -9,6 +9,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     { name: 'Tasks', path: '/tasks' },
     { name: 'Leaderboard', path: '/leaderboard' },
     { name: 'History', path: '/history' },
+    { name: 'Referral', path: '/referral' },
     { name: 'About', path: '/about' },
     { name: 'FAQ', path: '/faq' },
     { name: 'Contact', path: '/contact' },
