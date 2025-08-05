@@ -184,14 +184,36 @@ const WithdrawalsView = ({ withdrawals, handleMarkAsPaid }) => (
 // View for generating codes
 const GenerateCodeView = () => {
   const [generatedCode, setGeneratedCode] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const generateCode = () => {
-    const characters = 'A0B1C2D3E4F5G6H7I8J9KLMNOPQRSTUVWXYZ';
-    let result = '';
-    for (let i = 0; i < 6; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
+  const generateCode = async () => {
+    setLoading(true);
+    setGeneratedCode(null);
+    setError(null);
+
+    try {
+      const response = await fetch('http://localhost/backend/generate_code.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({}), // Empty body for a simple POST request
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setGeneratedCode(data.code);
+      } else {
+        setError(data.message || 'Failed to generate code.');
+      }
+    } catch (err) {
+      console.error('Code generation error:', err);
+      setError('Network error. Failed to connect to the backend.');
+    } finally {
+      setLoading(false);
     }
-    setGeneratedCode(result);
   };
 
   return (
@@ -200,13 +222,19 @@ const GenerateCodeView = () => {
       <div className="bg-white p-6 rounded-lg shadow-md text-center">
         <button
           onClick={generateCode}
-          className="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition-colors"
+          disabled={loading}
+          className="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Generate
+          {loading ? 'Generating...' : 'Generate'}
         </button>
         {generatedCode && (
           <p className="mt-4 text-green-600">
             Code has been successfully generated: <strong className="font-bold">{generatedCode}</strong>
+          </p>
+        )}
+        {error && (
+          <p className="mt-4 text-red-600">
+            Error: <strong className="font-bold">{error}</strong>
           </p>
         )}
       </div>
