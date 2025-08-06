@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTitle } from '../hooks/useTitle';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const SignIn = ({
   useEmail = true,
@@ -8,34 +9,69 @@ const SignIn = ({
   showSignUpLink = true,
 }) => {
   useTitle('Login');
-  const [name, setName] = useState('');
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
+  const [name, setName] = useState(''); // Keep if you might use name-based login later
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false); // New loading state
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Start loading
+    setError(''); // Clear previous errors
 
-    if (useEmail) {
-      if (!email || !password) {
-        setError('Email and password are required.');
-        return;
-      }
-      console.log('Email:', email);
-    } else {
-      if (!name || !password) {
-        setError('Name and password are required.');
-        return;
-      }
-      console.log('Name:', name);
+    if (!email || !password) { // Assuming useEmail is always true for user login
+      setError('Email and password are required.');
+      setLoading(false);
+      return;
     }
 
-    console.log('Password:', password);
-    console.log('Remember Me:', rememberMe);
+    try {
+      const response = await fetch('http://localhost/backend/user_management.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          action: 'login', // Specify the login action
+          email,
+          password,
+        }),
+      });
 
-    setError('');
+      const data = await response.json();
+
+      if (data.success) {
+        // Store authentication data
+        if (rememberMe) {
+          localStorage.setItem('user_token', data.data.token);
+          localStorage.setItem('user_name', data.data.full_name);
+          localStorage.setItem('user_email', data.data.email);
+          localStorage.setItem('user_id', data.data.user_id.toString());
+          localStorage.setItem('coinBalance', data.data.balance.toString()); // Store current balance
+        } else {
+          sessionStorage.setItem('user_token', data.data.token);
+          sessionStorage.setItem('user_name', data.data.full_name);
+          sessionStorage.setItem('user_email', data.data.email);
+          sessionStorage.setItem('user_id', data.data.user_id.toString());
+          sessionStorage.setItem('coinBalance', data.data.balance.toString()); // Store current balance
+        }
+
+        console.log('Login successful:', data.data);
+        navigate(data.redirect); // Redirect to dashboard
+      } else {
+        setError(data.message || 'Login failed. Please try again.');
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('Network error. Please check your connection and try again.');
+    } finally {
+      setLoading(false); // End loading
+    }
   };
 
   return (
@@ -80,6 +116,7 @@ const SignIn = ({
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 p-2.5 text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                   placeholder="name@company.com"
+                  disabled={loading}
                 />
               </div>
             </div>
@@ -113,6 +150,7 @@ const SignIn = ({
                   onChange={(e) => setName(e.target.value)}
                   className="w-full pl-10 p-2.5 text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                   placeholder="Your Name"
+                  disabled={loading}
                 />
               </div>
             </div>
@@ -147,11 +185,13 @@ const SignIn = ({
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full pl-10 p-2.5 text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 placeholder="••••••••"
+                disabled={loading}
               />
               <button
                 type="button"
                 onClick={() => setPasswordVisible(!passwordVisible)}
                 className="absolute inset-y-0 right-0 flex items-center pr-3"
+                disabled={loading}
               >
                 {passwordVisible ? (
                   <svg
@@ -194,6 +234,7 @@ const SignIn = ({
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                  disabled={loading}
                 />
               </div>
               <label
@@ -213,9 +254,10 @@ const SignIn = ({
 
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-green-500 rounded-lg hover:bg-green-400 focus:ring-4 focus:outline-none focus:ring-green-300"
+            className="w-full px-4 py-2 text-white bg-green-500 rounded-lg hover:bg-green-400 focus:ring-4 focus:outline-none focus:ring-green-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={loading} // Disable button when loading
           >
-            Sign In
+            {loading ? 'Signing In...' : 'Sign In'}
           </button>
         </form>
 
@@ -233,4 +275,3 @@ const SignIn = ({
 };
 
 export default SignIn;
-

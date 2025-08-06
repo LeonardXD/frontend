@@ -12,7 +12,7 @@ const SignUp = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!fullName || !email || !password || !accessCode) {
@@ -20,21 +20,42 @@ const SignUp = () => {
       return;
     }
 
-    // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError('Please enter a valid email address.');
       return;
     }
 
-    console.log('Full Name:', fullName);
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('Access Code:', accessCode);
-    console.log('Referral Code:', referralCode);
+    setError(''); // Clear previous errors
 
-    setError('');
-    // Add success message or redirect here
+    try {
+      const response = await fetch('http://localhost/backend/user_management.php', { // Adjust this URL to your PHP backend endpoint
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          action: 'signup',
+          fullName,
+          email,
+          password,
+          accessCode,
+          referralCode, // This will be null if not entered
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // On successful signup, redirect to Dashboard
+        window.location.href = data.redirect; // Or use React Router if you have it set up
+      } else {
+        setError(data.message);
+      }
+    } catch (err) {
+      setError('An error occurred during signup. Please try again.');
+      console.error('Signup error:', err);
+    }
   };
 
   return (
