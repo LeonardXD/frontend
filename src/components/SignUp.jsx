@@ -47,7 +47,11 @@ const SignUp = () => {
       const data = await response.json();
 
       if (data.success) {
-        // On successful signup, redirect to Dashboard
+        localStorage.setItem('user_token', data.data.token);
+        localStorage.setItem('user_name', data.data.full_name);
+        localStorage.setItem('user_email', data.data.email);
+        localStorage.setItem('user_id', data.data.user_id.toString());
+        localStorage.setItem('coinBalance', data.data.balance.toString()); // Store current balance
         window.location.href = data.redirect; // Or use React Router if you have it set up
       } else {
         setError(data.message);

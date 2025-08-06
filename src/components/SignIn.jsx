@@ -46,21 +46,12 @@ const SignIn = ({
       const data = await response.json();
 
       if (data.success) {
-        // Store authentication data
-        if (rememberMe) {
-          localStorage.setItem('user_token', data.data.token);
-          localStorage.setItem('user_name', data.data.full_name);
-          localStorage.setItem('user_email', data.data.email);
-          localStorage.setItem('user_id', data.data.user_id.toString());
-          localStorage.setItem('coinBalance', data.data.balance.toString()); // Store current balance
-        } else {
-          sessionStorage.setItem('user_token', data.data.token);
-          sessionStorage.setItem('user_name', data.data.full_name);
-          sessionStorage.setItem('user_email', data.data.email);
-          sessionStorage.setItem('user_id', data.data.user_id.toString());
-          sessionStorage.setItem('coinBalance', data.data.balance.toString()); // Store current balance
-        }
-
+        localStorage.setItem('user_token', data.data.token);
+        localStorage.setItem('user_name', data.data.full_name);
+        localStorage.setItem('user_email', data.data.email);
+        localStorage.setItem('user_id', data.data.user_id.toString());
+        localStorage.setItem('coinBalance', data.data.balance.toString()); // Store current balance
+       
         console.log('Login successful:', data.data);
         navigate(data.redirect); // Redirect to dashboard
       } else {
