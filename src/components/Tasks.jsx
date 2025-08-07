@@ -48,7 +48,7 @@ const Tasks = () => {
             <h2 className="text-2xl font-bold">Your Coins</h2>
             <div className="flex items-center mt-2">
               <img src="/doggy-coin.png" alt="Coin" className="w-12 h-12 mr-4" />
-              <p className="text-4xl font-bold">{coins.toLocaleString()}</p>
+              <p className="text-4xl font-bold">{coins}</p>
             </div>
           </div>
           <div className="bg-red-500 text-white p-6 rounded-lg shadow-lg">

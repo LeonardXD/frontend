@@ -3,29 +3,33 @@ import React from 'react';
 const withdrawalData = [
   {
     id: 1,
-    amount: '$100',
-    accountNumber: 'XXXX-1234',
+    amount: '₱100',
+    accountNumber: '09918910234',
+    method: 'GCash',
     date: 'August 1, 2025',
-    status: 'Paid',
-  },
-  {
-    id: 2,
-    amount: '$50',
-    accountNumber: 'XXXX-5678',
-    date: 'July 28, 2025',
     status: 'Pending',
   },
   {
+    id: 2,
+    amount: '₱50',
+    accountNumber: '09918910234',
+    method: 'GCash',
+    date: 'July 28, 2025',
+    status: 'Paid',
+  },
+  {
     id: 3,
-    amount: '$200',
-    accountNumber: 'XXXX-9012',
+    amount: '₱200',
+    accountNumber: '09918910234',
+    method: 'GCash',
     date: 'July 25, 2025',
-    status: 'Failed',
+    status: 'Paid',
   },
   {
     id: 4,
-    amount: '$75',
-    accountNumber: 'XXXX-3456',
+    amount: '₱75',
+    accountNumber: '09918910234',
+    method: 'Paymaya',
     date: 'July 22, 2025',
     status: 'Paid',
   },
@@ -57,6 +61,7 @@ const WithdrawalHistory = () => {
             <div className="mb-4 sm:mb-0">
               <p className="text-lg font-semibold">{item.amount}</p>
               <p className="text-sm text-gray-600">{item.accountNumber}</p>
+              <p className="text-sm text-gray-600">{item.method}</p>
               <p className="text-sm text-gray-500">{item.date}</p>
             </div>
             <div>
