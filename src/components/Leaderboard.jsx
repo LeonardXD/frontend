@@ -112,7 +112,7 @@ const Leaderboard = () => {
               <th className="py-3 px-4">Name</th>
               <th className="py-3 px-4">Number of Invites</th>
               <th className="py-3 px-4">Coins Accumulated</th>
-              <th className="py-3 px-4">Equivalent in PHP</th>
+              <th className="py-3 px-4">Commissions (rate in PHP)</th>
             </tr>
           </thead>
           <tbody>

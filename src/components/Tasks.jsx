@@ -271,7 +271,7 @@ const DailyRewardMode = ({ updateCoins, triggerAlert }) => {
 
   return (
     <div className="text-center">
-      <p className="text-lg mb-4">Reward Range: 50 - 1000 coins</p>
+      <p className="text-lg mb-4">Reward Range: 100 - 2000 coins</p>
       <button onClick={handleClaim} disabled={!canClaim} className="bg-green-500 text-white font-bold py-2 px-4 rounded-full disabled:bg-gray-400 disabled:cursor-not-allowed">
         {canClaim ? 'Claim' : 'Claimed'}
       </button>
