@@ -155,16 +155,31 @@ const MainDashboardView = () => (
 );
 
 // View for the withdrawals list
-const WithdrawalsView = ({ withdrawals, handleMarkAsPaid }) => (
+// MODIFICATION: Added searchQuery and setSearchQuery props for search functionality
+const WithdrawalsView = ({ withdrawals, handleMarkAsPaid, searchQuery, setSearchQuery }) => (
   <>
-    <h1 className="text-3xl font-bold text-gray-800 mb-6">Withdrawal Requests</h1>
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+      <h1 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">Withdrawal Requests</h1>
+      {/* NEW: Search input field */}
+      <div className="w-full md:w-1/3">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search by username..."
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
+    </div>
     <div className="space-y-4">
       {withdrawals.length > 0 ? (
         withdrawals.map(user => (
           <div key={user.id} className="bg-white p-4 rounded-lg shadow-md border border-gray-200 flex flex-col md:flex-row items-center justify-between transition-all duration-300">
             <div className="flex-1 mb-4 md:mb-0">
               <p className="text-lg font-semibold text-gray-800">{user.username}</p>
-              <p className="text-gray-600">Amount: <span className="font-bold">{user.amount}</span></p>
+              <p className="text-gray-600">Amount: ₱<span className="font-bold">{user.amount}</span></p>
+              <p className="text-gray-600">{user.method}</p>
+              <p className="text-gray-600">{user.number}</p>
             </div>
             <button
               onClick={() => handleMarkAsPaid(user.id)}
@@ -175,11 +190,14 @@ const WithdrawalsView = ({ withdrawals, handleMarkAsPaid }) => (
           </div>
         ))
       ) : (
-        <p className="text-center text-gray-500">No pending withdrawal requests.</p>
+        searchQuery.trim()
+          ? <p className="text-center text-gray-500">No withdrawal requests match your search.</p>
+          : <p className="text-center text-gray-500">No pending withdrawal requests.</p>
       )}
     </div>
   </>
 );
+
 
 // View for generating codes
 const GenerateCodeView = () => {
@@ -246,11 +264,13 @@ const GenerateCodeView = () => {
 const AdminDashboard = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('Dashboard');
+  // NEW: State to hold the search query
+  const [searchQuery, setSearchQuery] = useState('');
   const [withdrawals, setWithdrawals] = useState([
-    { id: 1, username: 'Mudkipeekotorhic', amount: 120 },
-    { id: 2, username: 'LeonardXD', amount: 300 },
-    { id: 3, username: 'Hotdog123', amount: 50 },
-    { id: 4, username: 'Smiley', amount: 210 },
+    { id: 1, username: 'Mudkipeekotorhic', amount: 120, method: 'GCash', number: '09129914790' },
+    { id: 2, username: 'LeonardXD', amount: 300, method: 'GCash', number: '09918910234' },
+    { id: 3, username: 'Hotdog123', amount: 50, method: 'Paymaya', number: '09479380936' },
+    { id: 4, username: 'Smiley', amount: 210, method: 'GCash', number: '09093676592' },
   ]);
 
   const toggleSidebar = () => {
@@ -261,6 +281,11 @@ const AdminDashboard = () => {
     setWithdrawals(prev => prev.filter(w => w.id !== id));
   };
 
+  // NEW: Filter the withdrawals based on the search query before rendering
+  const filteredWithdrawals = withdrawals.filter(user =>
+    user.username.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   const renderContent = () => {
     switch (activeTab) {
       case 'Dashboard':
@@ -268,7 +293,15 @@ const AdminDashboard = () => {
       case 'Generate Code':
         return <GenerateCodeView />;
       case 'Withdrawals':
-        return <WithdrawalsView withdrawals={withdrawals} handleMarkAsPaid={handleMarkAsPaid} />;
+        // MODIFICATION: Pass the filtered list and search state to the component
+        return (
+          <WithdrawalsView
+            withdrawals={filteredWithdrawals}
+            handleMarkAsPaid={handleMarkAsPaid}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
+        );
       case 'Promos':
         return <h1 className="text-3xl font-bold text-gray-800">Promos</h1>;
       case 'Profile':
