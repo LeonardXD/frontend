@@ -71,6 +71,7 @@ function App() {
       <Route path="/admin/generate-code" element={<AdminDashboard />} />
       <Route path="/admin/withdrawals" element={<AdminDashboard />} />
       <Route path="/admin/promos" element={<AdminDashboard />} />
+      <Route path="/admin/announcements" element={<AdminDashboard />} />
       <Route path="/admin/signin" element={<AdminSignIn />} />
       <Route
         path="*"

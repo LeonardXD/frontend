@@ -123,7 +123,7 @@ const AdminProfilePage = () => {
         {/* Profile Section */}
         <div className="text-center mb-8">
           <img
-            src="/profile.png" // Placeholder image
+            src="assets/profile.png" // Placeholder image
             alt="Profile"
             className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
           />

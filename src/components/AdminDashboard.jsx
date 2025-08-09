@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaUser, FaHourglassHalf } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import profile from '../../assets/profile.png';
 import { useTitle } from '../hooks/useTitle';
 
 import AdminProfilePage from './AdminProfilePage';
+import CreateAnnouncement from './CreateAnnouncement';
 
 // Re-usable Icon component for cards
 const CardIcon = ({ children }) => (
@@ -19,6 +20,7 @@ const AdminSidebar = ({ isOpen, toggleSidebar, activeTab, setActiveTab }) => {
     { name: 'Generate Code', path: '/admin/generate-code' },
     { name: 'Withdrawals', path: '/admin/withdrawals' },
     { name: 'Promos', path: '/admin/promos' },
+    { name: 'Announcements', path: '/admin/announcements' },
   ];
 
   return (
@@ -268,6 +270,25 @@ const GenerateCodeView = () => {
 const AdminDashboard = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('Dashboard');
+  const location = useLocation();
+
+  useEffect(() => {
+    const path = location.pathname;
+    if (path.includes('/admin/dashboard')) {
+      setActiveTab('Dashboard');
+    } else if (path.includes('/admin/generate-code')) {
+      setActiveTab('Generate Code');
+    } else if (path.includes('/admin/withdrawals')) {
+      setActiveTab('Withdrawals');
+    } else if (path.includes('/admin/promos')) {
+      setActiveTab('Promos');
+    } else if (path.includes('/admin/announcements')) {
+      setActiveTab('Announcements');
+    } else if (path.includes('/admin/profile')) {
+      setActiveTab('Profile');
+    }
+  }, [location.pathname]);
+
   // NEW: State to hold the search query
   const [searchQuery, setSearchQuery] = useState('');
   const [withdrawals, setWithdrawals] = useState([
@@ -308,6 +329,8 @@ const AdminDashboard = () => {
         );
       case 'Promos':
         return <h1 className="text-3xl font-bold text-gray-800">Promos</h1>;
+      case 'Announcements':
+        return <CreateAnnouncement />;
       case 'Profile':
         return <AdminProfilePage />;
       default:
