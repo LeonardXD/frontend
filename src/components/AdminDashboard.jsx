@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { FaUser, FaHourglassHalf } from "react-icons/fa";
 import { Link } from 'react-router-dom';
-import logo from '../../public/logo.png';
-import profile from '../../public/profile.png';
+import logo from '../../assets/logo.png';
+import profile from '../../assets/profile.png';
+import { useTitle } from '../hooks/useTitle';
 
 import AdminProfilePage from './AdminProfilePage';
 
@@ -117,6 +118,7 @@ const AdminFooter = () => (
 
 // View for the main dashboard content
 const MainDashboardView = () => (
+  useTitle('Admin Dashboard | DemoTasker'),
   <>
     <h1 className="text-3xl font-bold text-gray-800 mb-6">Dashboard</h1>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -157,6 +159,7 @@ const MainDashboardView = () => (
 // View for the withdrawals list
 // MODIFICATION: Added searchQuery and setSearchQuery props for search functionality
 const WithdrawalsView = ({ withdrawals, handleMarkAsPaid, searchQuery, setSearchQuery }) => (
+  useTitle('Withdrawals | DemoTasker'),
   <>
     <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
       <h1 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">Withdrawal Requests</h1>
@@ -204,6 +207,7 @@ const GenerateCodeView = () => {
   const [generatedCode, setGeneratedCode] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  useTitle('Generate Code | DemoTasker');
 
   const generateCode = async () => {
     setLoading(true);

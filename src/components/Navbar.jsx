@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import logo from '../../public/logo.png';
+import logo from '../../assets/logo.png';
 
 const Navbar = ({ toggleSidebar }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -57,7 +57,7 @@ const Navbar = ({ toggleSidebar }) => {
           // Profile Icon for logged-in state
           <div className="relative">
             <img
-              src="../../public/profile.png" // Adjust path as needed
+              src="../../assets/profile.png" // Adjust path as needed
               alt="Profile"
               className="h-10 w-10 cursor-pointer rounded-full"
               onClick={toggleDropdown}

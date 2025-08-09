@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../public/logo.png'; // Adjust path as needed
+import logo from '../../assets/logo.png'; // Adjust path as needed
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const [activeItem, setActiveItem] = useState(null);

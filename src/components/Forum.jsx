@@ -7,7 +7,7 @@ const Forum = () => {
   return (
     <div className="flex items-center justify-center w-full h-full">
       <img
-        src="/coming-soon.png"
+        src="assets/coming-soon.png"
         alt="Coming Soon"
         className="max-w-full h-auto lg:w-1/3"
       />

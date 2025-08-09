@@ -47,7 +47,7 @@ const Tasks = () => {
           <div className="bg-green-500 text-white p-6 rounded-lg shadow-lg">
             <h2 className="text-2xl font-bold">Your Coins</h2>
             <div className="flex items-center mt-2">
-              <img src="/doggy-coin.png" alt="Coin" className="w-12 h-12 mr-4" />
+              <img src="assets/doggy-coin.png" alt="Coin" className="w-12 h-12 mr-4" />
               <p className="text-4xl font-bold">{coins}</p>
             </div>
           </div>
@@ -238,7 +238,15 @@ const DailyRewardMode = ({ updateCoins, triggerAlert }) => {
 
   const handleClaim = () => {
     if (canClaim) {
-      const reward = Math.floor(Math.random() * 951) + 50;
+      let reward;
+      const rand = Math.random();
+      if (rand < 0.97) {
+        reward = Math.floor(Math.random() * 151) + 100; // 100-250
+      } else if (rand < 0.99) {
+        reward = Math.floor(Math.random() * (1999 - 251 + 1)) + 251; // 251-1999
+      } else {
+        reward = 2000;
+      }
       updateCoins(reward);
       triggerAlert(`You claimed ${reward} coins!`, 'success');
       localStorage.setItem('lastClaimedTimestamp', Date.now().toString());
