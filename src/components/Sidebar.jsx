@@ -10,6 +10,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     { name: 'Leaderboard', path: '/leaderboard' },
     { name: 'History', path: '/history' },
     { name: 'Referral', path: '/referral' },
+    { name: 'Announcements', path: '/announcements' },
     { name: 'About', path: '/about' },
     { name: 'FAQ', path: '/faq' },
     { name: 'Contact', path: '/contact' },

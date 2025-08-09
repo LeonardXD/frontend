@@ -20,6 +20,7 @@ import AdminSignIn from './components/AdminSignIn';
 import Forum from './components/Forum';
 import WithdrawalHistory from './components/WithdrawalHistory';
 import Referral from './components/Referral';
+import Announcements from './components/Announcements';
 import './index.css';
 
 const AppLayout = () => {
@@ -64,6 +65,7 @@ function App() {
         <Route path="/forum" element={<Forum />} />
         <Route path="/history" element={<WithdrawalHistory />} />
         <Route path="/referral" element={<Referral />} />
+        <Route path="/announcements" element={<Announcements />} />
       </Route>
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
       <Route path="/admin/generate-code" element={<AdminDashboard />} />

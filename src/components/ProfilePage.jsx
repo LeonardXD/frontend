@@ -173,7 +173,7 @@ const ProfilePage = () => {
         {/* Profile Section */}
         <div className="text-center mb-8">
           <img
-            src="/logo.png" // Placeholder image
+            src="assets/logo.png" // Placeholder image
             alt="Profile"
             className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
           />
