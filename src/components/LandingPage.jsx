@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaMoneyCheck } from "react-icons/fa";
 import { useTitle } from '../hooks/useTitle';
+import { FaUsers } from "react-icons/fa";
 
 // --- Constants for Text Content ---
 const navLinks = [
@@ -47,7 +48,7 @@ const features = [
     description: 'Receive your earnings securely and legitimately through our trusted payment methods.',
   },
   {
-    icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M15 21v-1a6 6 0 00-5.197-5.986',
+    iconComponent: <FaUsers className="w-12 h-12" />,
     title: 'Referral Bonuses',
     description: 'Invite your friends and earn ₱20 for each successful referral — plus, your friend gets ₱5 too!',
   },
