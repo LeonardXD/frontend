@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom scrollbar for mobile sidebar */
+.mobile-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.mobile-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mobile-scrollbar::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 5px;
+}
+
+.mobile-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
